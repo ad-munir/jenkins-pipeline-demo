@@ -44,7 +44,7 @@ pipeline {
 
          stage('Run the app as container') {
             steps {
-                bat " docker run -d -p 8080:8081 --name demo $DOCKER_IMAGE"
+                bat " docker run -d -p 8080:8080 --name demo $DOCKER_IMAGE"
             }
         }
         
