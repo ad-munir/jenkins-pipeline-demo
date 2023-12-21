@@ -9,6 +9,7 @@ pipeline {
     environment {
         APP_NAME = "Demo Spring Boot App"
         GIT_REPO = "https://github.com/ad-munir/jenkins-pipeline-demo"
+        DOCKER_IMAGE = 'mounirad/demo-app'
     }
 
     stages {
@@ -33,6 +34,14 @@ pipeline {
                 bat 'mvn install -Dmaven.test.skip=true'
             }
         }
+
+        stage('Build Docker Image') {
+            steps {
+                // Build a Docker image the Spring Boot application
+                bat "docker build -t $DOCKER_IMAGE ."
+            }
+        }
+
         
     }
 }
