@@ -59,6 +59,22 @@ pipeline {
                 bat " docker run -d -p 8080:8080 --name demo $DOCKER_IMAGE"
             }
         }
+
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    // Authenticate to Docker registry if necessary
+                    bat 'docker login -u mounirad -p mydocker@2023'
+                    
+                    // Tag the Docker image for Docker Hub
+                    bat "docker tag $DOCKER_IMAGE $DOCKER_IMAGE:latest"
+
+
+                    // Push the Docker image to Docker Hub
+                    bat "docker push $DOCKER_IMAGE:latest"
+                }
+            }
+        }
         
     }
 }
