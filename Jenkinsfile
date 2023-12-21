@@ -20,6 +20,18 @@ pipeline {
             }
         }
 
+        stage('Stop and Remove Existing Container') {
+            steps {
+                script {
+                    // Stop and remove the existing container if it exists
+                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        bat 'docker stop demo'
+                        bat 'docker rm demo'
+                    }
+                }
+            }
+        }
+
         stage('Code Checkout') {
             steps {
                 checkout scmGit([
