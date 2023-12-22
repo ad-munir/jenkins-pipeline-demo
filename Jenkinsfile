@@ -63,8 +63,10 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    // Authenticate to Docker registry if necessary
-                    bat 'docker login -u mounirad -p mydocker@2023'
+                    // Utilisez withCredentials pour masquer les informations d'identification
+                    withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                    // Authenticate to Docker Hub registry
+                    bat "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
                     
                     // Tag the Docker image for Docker Hub
                     bat "docker tag $DOCKER_IMAGE $DOCKER_IMAGE:latest"
