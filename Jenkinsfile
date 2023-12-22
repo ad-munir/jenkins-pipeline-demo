@@ -74,7 +74,7 @@ pipeline {
 
                     // Push the Docker image to Docker Hub
                     bat "docker push $DOCKER_IMAGE:latest"
-                }
+                
             }
         }
         
